@@ -8,14 +8,9 @@ var ON_DEATH = require('death');
 var dispatcher = require('httpdispatcher');
 var io = require('socket.io').listen(server);
 var spawn = require("child_process").spawn;
-var process = spawn('python', ['wii_remote_CamJam.py']);
 
-//var PythonShell = require('python-shell');
-//
-//PythonShell.run('wii_remote_CamJam.py', function (err) {
-//  if (err) throw err;
-//  console.log('finished');
-//});
+// starting wiimote process
+var process = spawn('python', ['wii_remote_CamJam.py']);
 
 // Chargement du fichier index.html affiché au client
 var server = http.createServer(function (req, res) {
@@ -82,7 +77,13 @@ io.sockets.on('connection', function (socket) {
 	    case "backward":
 		backward(thenStop);
             break;
-	}
+	    case "left":
+		left(thenStop);
+            break;
+	    case "right":
+		right(thenStop);
+            break;
+        }
     });
 });
 
@@ -207,21 +208,55 @@ function right(callBack) {
 }
 
 function left(callBack) {
+    command({
+        "19": {"value": true},
+        "21": {"value": false},
+        "24": {"value": false},
+        "26": {"value": false},
+    }, callBack);
+//    callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
+//    async.parallel([
+//        function(callback) {
+//            gpio.write(21, false, callback);
+//        },
+//        function(callback) {
+//            gpio.write(26, false, callback);
+//        },
+//        function(callback) {
+//            gpio.write(19, true, callback);
+//        },
+//        function(callback) {
+//            gpio.write(24, false, callback);
+//        }
+//    ], function(err, results) {
+//        callBack();
+//    });
+}
+
+var outputsOff = {
+    "19": {"value": false},
+    "21": {"value": false},
+    "24": {"value": false},
+    "26": {"value": false},
+};
+
+function command(outputs, callback) {
     callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
     async.parallel([
         function(callback) {
-            gpio.write(21, false, callback);
+            gpio.write(19, outputs["19"].value, callback);
         },
         function(callback) {
-            gpio.write(26, false, callback);
+            gpio.write(24, outputs["19"].value, callback);
         },
         function(callback) {
-            gpio.write(19, true, callback);
+            gpio.write(26, outputs["19"].value, callback);
         },
         function(callback) {
-            gpio.write(24, false, callback);
+            gpio.write(21, outputs["19"].value, callback);
         }
     ], function(err, results) {
         callBack();
     });
+
 }
