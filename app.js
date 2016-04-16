@@ -6,7 +6,6 @@ var gpio = require('rpi-gpio');
 var async = require('async');
 var ON_DEATH = require('death');
 var app = require('express')();
-var io = require('socket.io').listen(server);
 var spawn = require("child_process").spawn;
 
 // starting wiimote process
@@ -14,6 +13,7 @@ var pythonProcess = spawn('python', ['wii_remote_CamJam.py']);
 
 // Chargement du fichier index.html affiché au client
 var server = http.Server(app);
+var io = require('socket.io').listen(server);
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
