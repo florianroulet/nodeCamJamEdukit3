@@ -5,7 +5,7 @@ var fs = require('fs');
 var gpio = require('rpi-gpio');
 var async = require('async');
 var ON_DEATH = require('death');
-var dispatcher = require('httpdispatcher');
+var app = require('express')();
 var io = require('socket.io').listen(server);
 var spawn = require("child_process").spawn;
 
@@ -13,57 +13,37 @@ var spawn = require("child_process").spawn;
 var pythonProcess = spawn('python', ['wii_remote_CamJam.py']);
 
 // Chargement du fichier index.html affiché au client
-var server = http.createServer(function (req, res) {
-    try {
-        console.log(req.url);
-        dispatcher.dispatch(req, res);
-    } catch (err) {
-        console.log(err);
-    }
+var server = http.Server(app);
 
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/index.html');
 });
 
-dispatcher.onGet("/index.html", function (req, res) {
-    fs.readFile('index.html', 'utf-8', function (error, content) {
-        res.writeHead(200, {"Content-Type": "text/html"});
-        res.end(content);
-    });
-
-});
-
-dispatcher.onGet("/socket.io/socket.io.js", function (req, res) {
-    fs.readFile('./node_modules/socket.io-client/socket.io.js', 'utf-8', function (error, content) {
-        res.writeHead(200, {"Content-Type": "application/javascript"});
-        res.end(content);
-    });
-
-});
-
-dispatcher.onGet("/forward", function (req, res) {
+app.get("/forward", function (req, res) {
     res.writeHead(200, {"Content-Type": "text/html"});
 	forward(thenStop);
     res.end("going straight forward !");
 });
 
-dispatcher.onGet("/backward", function (req, res) {
+app.get("/backward", function (req, res) {
     res.writeHead(200, {"Content-Type": "text/html"});
 	backward(thenStop);
     res.end("going straight forward !");
 });
 
-dispatcher.onGet("/stop", function (req, res) {
+app.get("/stop", function (req, res) {
     res.writeHead(200, {"Content-Type": "text/html"});
 	stop();
     res.end("All engines stopped !");
 });
 
-dispatcher.onGet("/left", function (req, res) {
+app.get("/left", function (req, res) {
     res.writeHead(200, {"Content-Type": "text/html"});
 	left(thenStop);
     res.end("going straight forward !");
 });
 
-dispatcher.onGet("/right", function (req, res) {
+app.get("/right", function (req, res) {
     res.writeHead(200, {"Content-Type": "text/html"});
 	right(thenStop);
     res.end("going straight forward !");
