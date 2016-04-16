@@ -96,7 +96,8 @@ server.listen(8080, function () {
 ON_DEATH(function () {
     gpio.destroy(function () {
         console.log('Closed pins, now exit');
-        process.exit(0);
+        return;
+        //process.exit(0);
     });
 });
 
@@ -121,23 +122,14 @@ function initGPIO() {
 }
 
 function stop() {
-    async.parallel([
-        function(callback) {
-            gpio.write(19, false, callback);
-        },
-        function(callback) {
-            gpio.write(24, false, callback);
-        },
-        function(callback) {
-            gpio.write(26, false, callback);
-        },
-        function(callback) {
-            gpio.write(21, false, callback);
-        }
-    ], function(err, results) {
+    command({
+        "19": {"value": false},
+        "21": {"value": false},
+        "24": {"value": false},
+        "26": {"value": false},
+    }, function(err, results) {
         console.log('All pins shutdown');
     });
-
 }
 
 function thenStop() {
@@ -148,63 +140,30 @@ function thenStop() {
 }
 
 function backward(callBack) {
-    callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
-    async.parallel([
-        function(callback) {
-            gpio.write(19, false, callback);
-        },
-        function(callback) {
-            gpio.write(24, false, callback);
-        },
-        function(callback) {
-            gpio.write(26, true, callback);
-        },
-        function(callback) {
-            gpio.write(21, true, callback);
-        }
-    ], function(err, results) {
-        callBack();
-    });
+    command({
+        "19": {"value": false},
+        "21": {"value": true},
+        "24": {"value": false},
+        "26": {"value": true},
+    }, callBack);
 }
 
 function forward(callBack) {
-    callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
-    async.parallel([
-        function(callback) {
-            gpio.write(21, false, callback);
-        },
-        function(callback) {
-            gpio.write(26, false, callback);
-        },
-        function(callback) {
-            gpio.write(19, true, callback);
-        },
-        function(callback) {
-            gpio.write(24, true, callback);
-        }
-    ], function(err, results) {
-        callBack();
-    });
+    command({
+        "19": {"value": true},
+        "21": {"value": false},
+        "24": {"value": true},
+        "26": {"value": false},
+    }, callBack);
 }
 
 function right(callBack) {
-    callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
-    async.parallel([
-        function(callback) {
-            gpio.write(21, false, callback);
-        },
-        function(callback) {
-            gpio.write(26, false, callback);
-        },
-        function(callback) {
-            gpio.write(19, false, callback);
-        },
-        function(callback) {
-            gpio.write(24, true, callback);
-        }
-    ], function(err, results) {
-        callBack();
-    });
+    command({
+        "19": {"value": false},
+        "21": {"value": false},
+        "24": {"value": true},
+        "26": {"value": false},
+    }, callBack);
 }
 
 function left(callBack) {
@@ -214,23 +173,6 @@ function left(callBack) {
         "24": {"value": false},
         "26": {"value": false},
     }, callBack);
-//    callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
-//    async.parallel([
-//        function(callback) {
-//            gpio.write(21, false, callback);
-//        },
-//        function(callback) {
-//            gpio.write(26, false, callback);
-//        },
-//        function(callback) {
-//            gpio.write(19, true, callback);
-//        },
-//        function(callback) {
-//            gpio.write(24, false, callback);
-//        }
-//    ], function(err, results) {
-//        callBack();
-//    });
 }
 
 var outputsOff = {
