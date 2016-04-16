@@ -65,7 +65,7 @@ io.sockets.on('connection', function (socket) {
     console.log('Un client est connecté !');
     socket.emit('connection', 'Vous êtes bien connecté !')
 
-    // Quand le serveur reçoit un signal de type "movement" du client    
+    // Quand le serveur reçoit un signal de type "movement" du client
     socket.on('movement', function (message) {
 	switch(message) {
 	    case "forward":
@@ -75,7 +75,7 @@ io.sockets.on('connection', function (socket) {
 		backward(thenStop);
             break;
 	}
-    }); 
+    });
 });
 
 initGPIO();
@@ -88,7 +88,7 @@ ON_DEATH(function() {
     gpio.destroy(function() {
         console.log('Closed pins, now exit');
         process.exit(0);
-    }); 
+    });
 });
 
 
@@ -151,7 +151,7 @@ function thenStop() {
     }, 100);
 }
 
-function backward(callBack) {  
+function backward(callBack) {
     callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
     async.parallel([
         function(callback) {
@@ -171,7 +171,7 @@ function backward(callBack) {
     });
 }
 
-function forward(callBack) {  
+function forward(callBack) {
     callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
     async.parallel([
         function(callback) {
@@ -191,7 +191,7 @@ function forward(callBack) {
     });
 }
 
-function right(callBack) {  
+function right(callBack) {
     callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
     async.parallel([
         function(callback) {
@@ -211,7 +211,7 @@ function right(callBack) {
     });
 }
 
-function left(callBack) {  
+function left(callBack) {
     callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
     async.parallel([
         function(callback) {
