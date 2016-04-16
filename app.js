@@ -32,35 +32,33 @@ dispatcher.onGet("/index.html", function (req, res) {
 });
 
 dispatcher.onGet("/forward", function (req, res) {
-        res.writeHead(200, {"Content-Type": "text/html"});
+    res.writeHead(200, {"Content-Type": "text/html"});
 	forward(thenStop);
-        res.end("going straight forward !");
+    res.end("going straight forward !");
 });
 
 dispatcher.onGet("/backward", function (req, res) {
-        res.writeHead(200, {"Content-Type": "text/html"});
+    res.writeHead(200, {"Content-Type": "text/html"});
 	backward(thenStop);
-        res.end("going straight forward !");
+    res.end("going straight forward !");
 });
 
 dispatcher.onGet("/stop", function (req, res) {
-        res.writeHead(200, {"Content-Type": "text/html"});
+    res.writeHead(200, {"Content-Type": "text/html"});
 	stop();
-        res.end("All engines stopped !");
+    res.end("All engines stopped !");
 });
-
 
 dispatcher.onGet("/left", function (req, res) {
-        res.writeHead(200, {"Content-Type": "text/html"});
+    res.writeHead(200, {"Content-Type": "text/html"});
 	left(thenStop);
-        res.end("going straight forward !");
+    res.end("going straight forward !");
 });
 
-
 dispatcher.onGet("/right", function (req, res) {
-        res.writeHead(200, {"Content-Type": "text/html"});
+    res.writeHead(200, {"Content-Type": "text/html"});
 	right(thenStop);
-        res.end("going straight forward !");
+    res.end("going straight forward !");
 });
 
 // Quand un client se connecte, on le note dans la console
