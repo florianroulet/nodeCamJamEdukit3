@@ -13,7 +13,8 @@
     "async": "2.0.0-rc.3",
     "death": "1.0.x",
     "httpdispatcher": "1.0.x",
-    "socket.io": "1.4.x"
+    "socket.io": "1.4.x",
+    "python-shell": "0.4.x"
   },
   "repository": {
     "type": "git",
