@@ -32,7 +32,7 @@ dispatcher.onGet("/index.html", function (req, res) {
 });
 
 dispatcher.onGet("/socket.io/socket.io.js", function (req, res) {
-    fs.readFile('./node_modules/socket.io-client', 'utf-8', function (error, content) {
+    fs.readFile('./node_modules/socket.io-client/socket.io.js', 'utf-8', function (error, content) {
         res.writeHead(200, {"Content-Type": "application/javascript"});
         res.end(content);
     });
