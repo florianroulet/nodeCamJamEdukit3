@@ -7,15 +7,15 @@ var async = require('async');
 var ON_DEATH = require('death');
 var dispatcher = require('httpdispatcher');
 var io = require('socket.io').listen(server);
+var spawn = require("child_process").spawn;
+var process = spawn('wii_remote_CamJam.py');
 
-
-
-var PythonShell = require('python-shell');
-
-PythonShell.run('wii_remote_CamJam.py', function (err) {
-  if (err) throw err;
-  console.log('finished');
-});
+//var PythonShell = require('python-shell');
+//
+//PythonShell.run('wii_remote_CamJam.py', function (err) {
+//  if (err) throw err;
+//  console.log('finished');
+//});
 
 // Chargement du fichier index.html affiché au client
 var server = http.createServer(function (req, res) {
