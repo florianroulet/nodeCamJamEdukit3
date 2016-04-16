@@ -240,7 +240,7 @@ var outputsOff = {
     "26": {"value": false},
 };
 
-function command(outputs, callback) {
+function command(outputs, callBack) {
     callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
     async.parallel([
         function(callback) {
