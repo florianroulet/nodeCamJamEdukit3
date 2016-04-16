@@ -97,7 +97,7 @@ ON_DEATH(function () {
     gpio.destroy(function () {
         console.log('Closed pins, now exit');
         //return;
-        //process.exit(0);
+        process.exit(0);
     });
 });
 
