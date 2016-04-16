@@ -3,14 +3,59 @@ var fs = require('fs');
 var gpio = require('rpi-gpio');
 var async = require('async');
 var ON_DEATH = require('death');
+var dispatcher = require('httpdispatcher');
 
 // Chargement du fichier index.html affiché au client
 var server = http.createServer(function(req, res) {
-    fs.readFile('./indexNode.html', 'utf-8', function(error, content) {
+    try {
+        console.log(req.url);
+        dispatcher.dispatch(req, res);
+    } catch(err) {
+        console.log(err);
+    }
+
+});
+
+dispatcher.onGet("/index.html", function(req, res) {
+    fs.readFile('index.html', 'utf-8', function(error, content) {
         res.writeHead(200, {"Content-Type": "text/html"});
         res.end(content);
     });
+
 });
+
+dispatcher.onGet("/forward", function(req, res) {
+        res.writeHead(200, {"Content-Type": "text/html"});
+	forward(thenStop);
+        res.end("going straight forward !");
+});
+
+dispatcher.onGet("/backward", function(req, res) {
+        res.writeHead(200, {"Content-Type": "text/html"});
+	backward(thenStop);
+        res.end("going straight forward !");
+});
+
+dispatcher.onGet("/stop", function(req, res) {
+        res.writeHead(200, {"Content-Type": "text/html"});
+	stop();
+        res.end("All engines stopped !");
+});
+
+
+dispatcher.onGet("/left", function(req, res) {
+        res.writeHead(200, {"Content-Type": "text/html"});
+	left(thenStop);
+        res.end("going straight forward !");
+});
+
+
+dispatcher.onGet("/right", function(req, res) {
+        res.writeHead(200, {"Content-Type": "text/html"});
+	right(thenStop);
+        res.end("going straight forward !");
+});
+
 
 // Chargement de socket.io
 var io = require('socket.io').listen(server);
@@ -18,32 +63,26 @@ var io = require('socket.io').listen(server);
 // Quand un client se connecte, on le note dans la console
 io.sockets.on('connection', function (socket) {
     console.log('Un client est connecté !');
+    socket.emit('connection', 'Vous êtes bien connecté !')
 
-    // Quand le serveur reçoit un signal de type "message" du client    
-    socket.on('message', function (message) {
-        console.log('Un client me parle ! Il me dit : ' + message);
+    // Quand le serveur reçoit un signal de type "movement" du client    
+    socket.on('movement', function (message) {
 	switch(message) {
 	    case "forward":
-		forward();
+		forward(thenStop);
             break;
 	    case "backward":
-		backward();
+		backward(thenStop);
             break;
 	}
     }); 
 });
 
-io.sockets.on('connection', function (socket) {
-    socket.emit('message', 'Vous êtes bien connecté !');
-});
-
 initGPIO();
 
-server.listen(8080);
-
-//process.on('SIGTERM', stopAll);
-
-//process.on('SIGINT', stopAll);
+server.listen(8080, function() {
+    console.log('Server listenning on port 8080');
+});
 
 ON_DEATH(function() {
     gpio.destroy(function() {
@@ -52,15 +91,18 @@ ON_DEATH(function() {
     }); 
 });
 
-function stopAll() {
-    server.close(function() {
-        console.log("shutting down server");
-        gpio.destroy(function() {
-            console.log('Closed pins, now exit');
-        }); 
-        process.exit(0);
-    });
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 function initGPIO() {
     async.parallel([
@@ -83,7 +125,7 @@ function initGPIO() {
 }
 
 function stop() {
-    async.series([
+    async.parallel([
         function(callback) {
             gpio.write(19, false, callback);
         },
@@ -102,55 +144,89 @@ function stop() {
 
 }
 
-function backward() {  
-    async.series([
-        function(callback) {
-            putPinHigh(19, false, callback);
-        },
-        function(callback) {
-            putPinHigh(24, false, callback);
-        },
-        function(callback) {
-            putPinHigh(26, true, callback);
-        },
-        function(callback) {
-            putPinHigh(21, true, callback);
-        }
-    ], function(err, results) {
-        console.log('Writes complete, pause then stop pins');
-        setTimeout(function() {
-            stop();
-        }, 100);
-    });
-
-    function putPinHigh(pin, value, callback) {
-        gpio.write(pin, value, callback);
-    }
+function thenStop() {
+    console.log('Writes complete, pause then stop pins');
+    setTimeout(function() {
+        stop();
+    }, 100);
 }
 
-function forward() { 
-
+function backward(callBack) {  
+    callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
     async.parallel([
         function(callback) {
-            putPinHigh(21, false, callback);
+            gpio.write(19, false, callback);
         },
         function(callback) {
-            putPinHigh(26, false, callback);
+            gpio.write(24, false, callback);
         },
         function(callback) {
-            putPinHigh(19, true, callback);
+            gpio.write(26, true, callback);
         },
         function(callback) {
-            putPinHigh(24, true, callback);
+            gpio.write(21, true, callback);
         }
     ], function(err, results) {
-        console.log('Writes complete, pause then stop pins');
-        setTimeout(function() {
-            stop();
-        }, 100);
+        callBack();
     });
+}
 
-    function putPinHigh(pin, value, callback) {
-        gpio.write(pin, value, callback);
-    }
+function forward(callBack) {  
+    callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
+    async.parallel([
+        function(callback) {
+            gpio.write(21, false, callback);
+        },
+        function(callback) {
+            gpio.write(26, false, callback);
+        },
+        function(callback) {
+            gpio.write(19, true, callback);
+        },
+        function(callback) {
+            gpio.write(24, true, callback);
+        }
+    ], function(err, results) {
+        callBack();
+    });
+}
+
+function right(callBack) {  
+    callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
+    async.parallel([
+        function(callback) {
+            gpio.write(21, false, callback);
+        },
+        function(callback) {
+            gpio.write(26, false, callback);
+        },
+        function(callback) {
+            gpio.write(19, false, callback);
+        },
+        function(callback) {
+            gpio.write(24, true, callback);
+        }
+    ], function(err, results) {
+        callBack();
+    });
+}
+
+function left(callBack) {  
+    callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
+    async.parallel([
+        function(callback) {
+            gpio.write(21, false, callback);
+        },
+        function(callback) {
+            gpio.write(26, false, callback);
+        },
+        function(callback) {
+            gpio.write(19, true, callback);
+        },
+        function(callback) {
+            gpio.write(24, false, callback);
+        }
+    ], function(err, results) {
+        callBack();
+    });
 }
