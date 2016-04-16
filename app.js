@@ -1,64 +1,63 @@
+"use strict";
+
 var http = require('http');
 var fs = require('fs');
 var gpio = require('rpi-gpio');
 var async = require('async');
 var ON_DEATH = require('death');
 var dispatcher = require('httpdispatcher');
+var io = require('socket.io').listen(server);
 
 // Chargement du fichier index.html affiché au client
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function (req, res) {
     try {
         console.log(req.url);
         dispatcher.dispatch(req, res);
-    } catch(err) {
+    } catch (err) {
         console.log(err);
     }
 
 });
 
-dispatcher.onGet("/index.html", function(req, res) {
-    fs.readFile('index.html', 'utf-8', function(error, content) {
+dispatcher.onGet("/index.html", function (req, res) {
+    fs.readFile('index.html', 'utf-8', function (error, content) {
         res.writeHead(200, {"Content-Type": "text/html"});
         res.end(content);
     });
 
 });
 
-dispatcher.onGet("/forward", function(req, res) {
+dispatcher.onGet("/forward", function (req, res) {
         res.writeHead(200, {"Content-Type": "text/html"});
 	forward(thenStop);
         res.end("going straight forward !");
 });
 
-dispatcher.onGet("/backward", function(req, res) {
+dispatcher.onGet("/backward", function (req, res) {
         res.writeHead(200, {"Content-Type": "text/html"});
 	backward(thenStop);
         res.end("going straight forward !");
 });
 
-dispatcher.onGet("/stop", function(req, res) {
+dispatcher.onGet("/stop", function (req, res) {
         res.writeHead(200, {"Content-Type": "text/html"});
 	stop();
         res.end("All engines stopped !");
 });
 
 
-dispatcher.onGet("/left", function(req, res) {
+dispatcher.onGet("/left", function (req, res) {
         res.writeHead(200, {"Content-Type": "text/html"});
 	left(thenStop);
         res.end("going straight forward !");
 });
 
 
-dispatcher.onGet("/right", function(req, res) {
+dispatcher.onGet("/right", function (req, res) {
         res.writeHead(200, {"Content-Type": "text/html"});
 	right(thenStop);
         res.end("going straight forward !");
 });
-
-
-// Chargement de socket.io
-var io = require('socket.io').listen(server);
 
 // Quand un client se connecte, on le note dans la console
 io.sockets.on('connection', function (socket) {
@@ -80,29 +79,16 @@ io.sockets.on('connection', function (socket) {
 
 initGPIO();
 
-server.listen(8080, function() {
+server.listen(8080, function () {
     console.log('Server listenning on port 8080');
 });
 
-ON_DEATH(function() {
-    gpio.destroy(function() {
+ON_DEATH(function () {
+    gpio.destroy(function () {
         console.log('Closed pins, now exit');
         process.exit(0);
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function initGPIO() {
     async.parallel([
