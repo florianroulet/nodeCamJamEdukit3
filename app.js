@@ -247,13 +247,13 @@ function command(outputs, callBack) {
             gpio.write(19, outputs["19"].value, callback);
         },
         function(callback) {
-            gpio.write(24, outputs["19"].value, callback);
+            gpio.write(24, outputs["24"].value, callback);
         },
         function(callback) {
-            gpio.write(26, outputs["19"].value, callback);
+            gpio.write(26, outputs["26"].value, callback);
         },
         function(callback) {
-            gpio.write(21, outputs["19"].value, callback);
+            gpio.write(21, outputs["21"].value, callback);
         }
     ], function(err, results) {
         callBack();
