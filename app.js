@@ -10,7 +10,7 @@ var io = require('socket.io').listen(server);
 var spawn = require("child_process").spawn;
 
 // starting wiimote process
-var process = spawn('python', ['wii_remote_CamJam.py']);
+var pythonProcess = spawn('python', ['wii_remote_CamJam.py']);
 
 // Chargement du fichier index.html affiché au client
 var server = http.createServer(function (req, res) {
