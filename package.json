@@ -8,6 +8,16 @@
     "socket.io": "^1.4.5"
   },
   "devDependencies": {},
+  "dependencies": {
+    "rpi-gpio": "0.7.x",
+    "async": "2.0.x0",
+    "death": "1.0.x",
+    "httpdispatcher": "1.0.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/florianroulet/nodeCamJamEdukit3.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
