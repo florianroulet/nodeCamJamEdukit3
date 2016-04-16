@@ -96,7 +96,7 @@ server.listen(8080, function () {
 ON_DEATH(function () {
     gpio.destroy(function () {
         console.log('Closed pins, now exit');
-        return;
+        //return;
         //process.exit(0);
     });
 });
