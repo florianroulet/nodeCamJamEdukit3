@@ -10,7 +10,7 @@
   "devDependencies": {},
   "dependencies": {
     "rpi-gpio": "0.7.x",
-    "async": "2.0.x0",
+    "async": "2.0.x",
     "death": "1.0.x",
     "httpdispatcher": "1.0.x"
   },
