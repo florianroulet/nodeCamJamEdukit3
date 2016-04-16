@@ -8,7 +8,7 @@ var ON_DEATH = require('death');
 var dispatcher = require('httpdispatcher');
 var io = require('socket.io').listen(server);
 var spawn = require("child_process").spawn;
-var process = spawn('./wii_remote_CamJam.py');
+var process = spawn('python', './wii_remote_CamJam.py');
 
 //var PythonShell = require('python-shell');
 //
