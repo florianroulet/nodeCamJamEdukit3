@@ -19,6 +19,7 @@
 import cwiid
 import time
 import urllib
+import os
 
 #import RPi.GPIO as io
 
@@ -63,8 +64,7 @@ while True:
     wii.rumble = 1
     time.sleep(1)
     wii.rumble = 0
-    import os
-    os.system("shutdown now -h")
+    os.system("shutdown now")
     quit()
     #wii.close()
     #continueProgramm = 0
