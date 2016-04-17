@@ -41,6 +41,9 @@ except RuntimeError:
   print("Error opening wiimote connection")
   quit()
 
+wii.rumble = 1
+time.sleep(1)
+wii.rumble = 0
 print('Wii Remote connected...\n')
 print('Press some buttons!\n')
 print('Press PLUS and MINUS together to disconnect and quit.\n')
