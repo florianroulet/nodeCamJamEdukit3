@@ -6,6 +6,7 @@
 # wii_remote_1.py
 # Connect a Nintendo Wii Remote via Bluetooth
 # and  read the button states in Python.
+# adapted to commande camJam Edukit3
 #
 # Project URL :
 # http://www.raspberrypi-spy.co.uk/?p=1101
@@ -43,7 +44,7 @@ except RuntimeError:
   quit()
 
 wii.rumble = 1
-time.sleep(1)
+time.sleep(0.5)
 wii.rumble = 0
 print('Wii Remote connected...\n')
 print('Press some buttons!\n')
