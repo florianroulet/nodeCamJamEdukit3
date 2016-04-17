@@ -63,7 +63,9 @@ while True:
     wii.rumble = 1
     time.sleep(1)
     wii.rumble = 0
-    exit(wii)
+    import os
+    os.system("shutdown now -h")
+    quit()
     #wii.close()
     #continueProgramm = 0
 
