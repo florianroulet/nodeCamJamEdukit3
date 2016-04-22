@@ -61,20 +61,20 @@ socket.on('connect', function(){
 
 // Quand le serveur reçoit un signal de type "movement" du client
 socket.on('movement', function (message) {
-switch(message) {
-    case "forward":
-    forward(thenStop);
-        break;
-    case "backward":
-    backward(thenStop);
-        break;
-    case "left":
-    left(thenStop);
-        break;
-    case "right":
-    right(thenStop);
-        break;
-    }
+    switch(message) {
+        case "forward":
+        forward(thenStop);
+            break;
+        case "backward":
+        backward(thenStop);
+            break;
+        case "left":
+        left(thenStop);
+            break;
+        case "right":
+        right(thenStop);
+            break;
+        }
 });
 //});
 
