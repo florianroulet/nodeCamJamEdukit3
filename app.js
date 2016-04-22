@@ -55,6 +55,10 @@ app.get("/right", function (req, res) {
 //    console.log('Un client est connecté !');
 //    socket.emit('connection', 'Vous êtes bien connecté !')
 
+socket.on('connect', function(){
+    console.log('connected to host');
+});
+
 // Quand le serveur reçoit un signal de type "movement" du client
 socket.on('movement', function (message) {
 switch(message) {
