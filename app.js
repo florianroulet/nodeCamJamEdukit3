@@ -7,7 +7,7 @@ var async = require('async');
 var ON_DEATH = require('death');
 var app = require('express')();
 var spawn = require("child_process").spawn;
-var socket = require('socket.io-client')('http://roulet.freeboxos.fr');
+var socket = require('socket.io-client')('http://roulet.freeboxos.fr/raspi');
 
 // starting wiimote process
 var pythonProcess = spawn('python', ['wii_remote_CamJam.py']);
