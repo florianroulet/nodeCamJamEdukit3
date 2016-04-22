@@ -75,34 +75,36 @@ while True:
   # and the predefined constant for that button.
   if (buttons & cwiid.BTN_LEFT):
     print('Left pressed')
-    response = urllib.urlopen("http://localhost:8080/backward").read()
+    urllib.urlopen("http://localhost:8080/backward").read()
     time.sleep(button_delay)
     #io.output(2, True)
 
   if(buttons & cwiid.BTN_RIGHT):
     print('Right pressed')
-    response = urllib.urlopen("http://localhost:8080/forward").read()
+    urllib.urlopen("http://localhost:8080/forward").read()
     time.sleep(button_delay)
     #io.output(3, True)
 
   if (buttons & cwiid.BTN_UP):
     print('Up pressed')
-    response = urllib.urlopen("http://localhost:8080/left").read()
+    urllib.urlopen("http://localhost:8080/left").read()
     time.sleep(button_delay)
     #io.output(4, True)
 
   if (buttons & cwiid.BTN_DOWN):
     print('Down pressed')
-    response = urllib.urlopen("http://localhost:8080/right").read()
+    urllib.urlopen("http://localhost:8080/right").read()
     time.sleep(button_delay)
     #io.output(17, True)
 
   if (buttons & cwiid.BTN_1):
     print('Button 1 pressed')
+    urllib.urlopen("http://localhost:8080/slow").read()
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_2):
     print('Button 2 pressed')
+    urllib.urlopen("http://localhost:8080/fast").read()
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_A):
