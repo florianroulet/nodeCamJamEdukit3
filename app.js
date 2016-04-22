@@ -188,3 +188,11 @@ function command(outputs, callBack) {
     });
 
 }
+
+function pwm(outputs, callBack) {
+    callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
+
+    command(outputs);
+
+    thenStop();
+}
