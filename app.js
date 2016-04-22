@@ -7,13 +7,14 @@ var async = require('async');
 var ON_DEATH = require('death');
 var app = require('express')();
 var spawn = require("child_process").spawn;
+var socket = require('socket.io-client')('http://www.roulet.freeboxos.fr');
 
 // starting wiimote process
 var pythonProcess = spawn('python', ['wii_remote_CamJam.py']);
 
 // Chargement du fichier index.html affiché au client
 var server = http.Server(app);
-var io = require('socket.io').listen(server);
+//var io = require('socket.io').listen(server);
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
@@ -50,28 +51,28 @@ app.get("/right", function (req, res) {
 });
 
 // Quand un client se connecte, on le note dans la console
-io.sockets.on('connection', function (socket) {
-    console.log('Un client est connecté !');
-    socket.emit('connection', 'Vous êtes bien connecté !')
+//io.sockets.on('connection', function (socket) {
+//    console.log('Un client est connecté !');
+//    socket.emit('connection', 'Vous êtes bien connecté !')
 
-    // Quand le serveur reçoit un signal de type "movement" du client
-    socket.on('movement', function (message) {
-	switch(message) {
-	    case "forward":
-		forward(thenStop);
-            break;
-	    case "backward":
-		backward(thenStop);
-            break;
-	    case "left":
-		left(thenStop);
-            break;
-	    case "right":
-		right(thenStop);
-            break;
-        }
-    });
+// Quand le serveur reçoit un signal de type "movement" du client
+socket.on('movement', function (message) {
+switch(message) {
+    case "forward":
+    forward(thenStop);
+        break;
+    case "backward":
+    backward(thenStop);
+        break;
+    case "left":
+    left(thenStop);
+        break;
+    case "right":
+    right(thenStop);
+        break;
+    }
 });
+//});
 
 initGPIO();
 
