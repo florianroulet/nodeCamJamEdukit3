@@ -1,0 +1,20 @@
+#!/bin/sh
+#/etc/init.d/robotUp
+
+export PATH=$PATH:/usr/local/bin
+export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
+
+case "$1" in
+  start)
+  exec forever --sourceDir=/home/pi/Documents/EduKit3/Code/nodeCamJamEdukit3 -p /home/pi/Documents/EduKit3/Code/nodeCamJamEdukit3/forever/pidetcfiles app.js
+  ;;
+stop)
+  exec forever stop --sourceDir=/home/pi/Documents/EduKit3/Code/nodeCamJamEdukit3 app.js
+  ;;
+*)
+  echo "Usage: /etc/init.d/robotUp {start|stop}"
+  exit 1
+  ;;
+esac
+
+exit 0
