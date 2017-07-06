@@ -25,7 +25,6 @@ class CamJamBot extends Bot {
         this.user = this.users.filter(function (user) {
             return user.name === self.name;
         })[0];
-        this.botId = this.user.id;
         console.log('this.user : ', this.user);
     };
 
@@ -44,10 +43,15 @@ class CamJamBot extends Bot {
             console.log('new message : ', message);
         }
 
-
+        console.log({
+            isMessage: CamJamBot.isMessage(message),
+            isMessageToChannel: CamJamBot.isMessageToChannel(message),
+            isFromUser: CamJamBot.isFromUser(message, this.user.id),
+            isMentioningMe: this._isMentioningMe(message)
+        });
         if (CamJamBot.isMessage(message)
             && CamJamBot.isMessageToChannel(message)
-            && !CamJamBot.isFromUser(message, this.botId)
+            && !CamJamBot.isFromUser(message, this.user.id)
             && this._isMentioningMe(message)
         ) {
             console.log('new message : ', message);
