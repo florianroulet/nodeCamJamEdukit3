@@ -37,8 +37,7 @@ class CamJamBot extends Bot {
 
     _onMessage(message) {
         console.log('message : ', message);
-        if (this._isChatMessage(message) &&
-            this._isChannelConversation(message) &&
+        if ((this._isChatMessage(message) || this._isChannelConversation(message)) &&
             !this._isFromMe(message) &&
             this._isMentioningMe(message)
         ) {
@@ -61,7 +60,7 @@ class CamJamBot extends Bot {
 
     _isMentioningMe(message) {
         return message.text.toLowerCase().indexOf(this.settings.name) > -1 ||
-            message.text.toLowerCase().indexOf(this.name) > -1;
+            message.text.toLowerCase().indexOf(this.user.name) > -1;
     };
 }
 
