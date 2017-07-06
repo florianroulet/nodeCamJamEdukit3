@@ -25,6 +25,7 @@ class CamJamBot extends Bot {
         this.user = this.users.filter(function (user) {
             return user.name === self.name;
         })[0];
+        console.log('this.user : ', this.user);
     };
 
     _welcomeMessage() {
