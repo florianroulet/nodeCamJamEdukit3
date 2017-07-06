@@ -1,9 +1,6 @@
 "use strict";
 
 var fs = require('fs');
-var CamJamPi = require('./camJamNodePi');
-
-const camJamPi = new CamJamPi();
 
 /***************************************** GESTION wiimote ***********************************************************/
 // starting wiimote process
@@ -23,31 +20,15 @@ var bot = new CamJamBot({
 bot.run();
 
 /***************************************** GESTION slackbot **********************************************************/
+
+var CamJamPi = require('./camJamNodePi');
+const camJamPi = new CamJamPi();
+
 var StaticWebHandle = require('./staticWebHandle');
-(new StaticWebHandle).run(camJamPi);
+var staticWebHandle = new StaticWebHandle({port: process.env.SERVER_PORT});
+staticWebHandle.run(camJamPi);
 
-/***************************************** GESTION socket ************************************************************/
-var socket = require('socket.io-client')('http://roulet.freeboxos.fr/raspi');
-socket.on('connect', function(){
-    console.log('connected to host');
-});
-
-// Quand le serveur reçoit un signal de type "movement" du client
-socket.on('movement', function (message) {
-    switch(message) {
-        case "forward":
-        forward(thenStop);
-            break;
-        case "backward":
-        backward(thenStop);
-            break;
-        case "left":
-        left(thenStop);
-            break;
-        case "right":
-        right(thenStop);
-            break;
-        }
-});
-/***************************************** GESTION socket ************************************************************/
+var SocketHandle = require('./socketHandle');
+var socketHandle = new SocketHandle({host: process.env.SOCKET_HOST});
+socketHandle.run(camJamPi);
 

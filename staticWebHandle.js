@@ -5,6 +5,8 @@ var http = require('http');
 
 
 var StaticHandle = function Constructor(settings) {
+    this.settings = settings;
+    this.settings.port = settings.port || 8080;
 
 };
 
@@ -46,8 +48,8 @@ StaticHandle.prototype.run = function (camJamPi) {
         res.end("going straight forward !");
     });
 
-    server.listen(8080, function () {
-        console.log('Server listenning on port 8080');
+    server.listen(this.settings.port, function () {
+        console.log('Server listenning on port : ' + this.settings.port);
     });
 
 };

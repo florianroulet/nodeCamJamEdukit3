@@ -11,8 +11,7 @@ var CamJamPi = function Constructor() {
 };
 
 CamJamPi.prototype.thenStop = function() {
-    var self = this;
-    console.log('Writes complete, pause then stop pins', self);
+    console.log('Writes complete, pause then stop pins');
     setTimeout(function() {
         _command(outputsOff, function(err, results) {
             console.log('All pins shutdown');
