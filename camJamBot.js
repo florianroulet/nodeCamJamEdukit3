@@ -5,7 +5,7 @@ const Bot = require('slackbots');
 
 class CamJamBot extends Bot {
 
-    constructor(settings) {
+    constructor(settings, camJamPi) {
         super(settings);
         this.settings = settings;
         this.settings.name = settings.name || 'camJamBot';
@@ -13,6 +13,7 @@ class CamJamBot extends Bot {
         this.user = null;
         this.on('start', this._onStart);
         this.on('message', this._onMessage);
+        this.camJamPi = camJamPi;
     }
 
     _onStart() {
@@ -36,13 +37,6 @@ class CamJamBot extends Bot {
     };
 
     _onMessage(message) {
-        console.log('message : ', message);
-        if (message.type === 'message' && message.text &&
-
-            typeof message.channel === 'string' && message.channel[0] === 'C') {
-            console.log('new message : ', message);
-        }
-
         console.log({
             isMessage: CamJamBot.isMessage(message),
             isMessageToChannel: CamJamBot.isMessageToChannel(message),
@@ -55,6 +49,9 @@ class CamJamBot extends Bot {
             && CamJamBot.isMentioningMe(message, this.settings.name, this.user.name, this.user.id)
         ) {
             console.log('new message : ', message);
+            if (message.text ==='f') {
+                this.camJamPi.forward(this.camJamPi.thenStop);
+            }
         }
     };
 

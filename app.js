@@ -2,6 +2,9 @@
 
 var fs = require('fs');
 
+var CamJamPi = require('./camJamNodePi');
+const camJamPi = new CamJamPi();
+
 /***************************************** GESTION wiimote ***********************************************************/
 // starting wiimote process
 var spawn = require("child_process").spawn;
@@ -15,14 +18,11 @@ var CamJamBot = require('./camJamBot');
 var bot = new CamJamBot({
     token: process.env.BOT_API_KEY,
     name: 'camjamedukit3'
-});
+}, camJamPi);
 
 //bot.run();
 
 /***************************************** GESTION slackbot **********************************************************/
-
-var CamJamPi = require('./camJamNodePi');
-const camJamPi = new CamJamPi();
 
 var StaticWebHandle = require('./staticWebHandle');
 var staticWebHandle = new StaticWebHandle({port: process.env.SERVER_PORT});
