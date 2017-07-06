@@ -25,6 +25,14 @@ bot.on('start', function() {
     bot.postMessageToGroup('some-private-group', 'hello group chat!');
 });
 
+/**
+ * @param {object} data
+ */
+bot.on('message', function(data) {
+    // all ingoing events https://api.slack.com/rtm
+    console.log(data);
+});
+
 /***************************************** GESTION slackbot **********************************************************/
 
 
