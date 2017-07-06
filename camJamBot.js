@@ -38,19 +38,26 @@ class CamJamBot extends Bot {
 
     _onMessage(message) {
         console.log('message : ', message);
-        if ((CamJamBot.isMessage(message) || CamJamBot.isMessageToChannel(message)) &&
-            !CamJamBot.isFromUser(message, this.botId) &&
-            this._isMentioningMe(message)
+        if (CamJamBot.isMessage(message)
+            && CamJamBot.isMessageToChannel(message)
+            && !CamJamBot.isFromUser(message, this.botId)
+            && this._isMentioningMe(message)
         ) {
             console.log('new message : ', message);
         }
     };
 
-    static isMessage = message => Boolean(message.type === 'message' && message.content);
+    static isMessage(message){
+        return Boolean(message.type === 'message' && message.text);
+    }
 
-    static isMessageToChannel = message => typeof message.channel === 'string' && message.channel[0] === 'C';
+    static isMessageToChannel(message) {
+        return typeof message.channel === 'string' && message.channel[0] === 'C';
+    }
 
-    static isFromUser = (event, userId) => event.user === userId;
+    static isFromUser(event, userId) {
+        return event.user === userId;
+    }
 
     _isMentioningMe(message) {
         let content = message.content || '';
