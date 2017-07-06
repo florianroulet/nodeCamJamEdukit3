@@ -10,29 +10,15 @@ var pythonProcess = spawn('python', ['wii_remote_CamJam.py']);
 /***************************************** GESTION wiimote ***********************************************************/
 
 /***************************************** GESTION slackbot **********************************************************/
-var Bot = require('slackbots');
+var camJamBot = require('camJamBot');
 
 // create a bot
-var settings = {
-    token: '',
+var bot = new camJamBot({
+    token: process.env.BOT_API_KEY,
     name: 'camjamedukit3'
-};
-var bot = new Bot(settings);
-
-bot.on('start', function() {
-    var params = {
-        icon_emoji: ':rocket:'
-    };
-    bot.postMessageToChannel('general', 'Hello channel!', params);
 });
 
-/**
- * @param {object} data
- */
-bot.on('message', function(data) {
-    // all ingoing events https://api.slack.com/rtm
-    console.log(data);
-});
+bot.run();
 
 /***************************************** GESTION slackbot **********************************************************/
 
