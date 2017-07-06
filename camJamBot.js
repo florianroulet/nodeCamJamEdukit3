@@ -15,7 +15,7 @@ util.inherits(CamJamBot, Bot);
 
 
 CamJamBot.prototype.run = function () {
-    CamJamBot.super_.call(this, this.settings);
+    Bot.call(this, this.settings);
 
     this.on('start', this._onStart);
     this.on('message', this._onMessage);
