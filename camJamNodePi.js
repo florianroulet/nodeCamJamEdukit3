@@ -7,7 +7,7 @@ var ON_DEATH = require('death');
 
 
 var CamJamPi = function Constructor() {
-    this._initGPIO();
+    _initGPIO();
 };
 
 CamJamPi.prototype.stop = function() {
