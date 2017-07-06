@@ -15,19 +15,19 @@ class CamJamBot extends Bot {
         this.on('message', this._onMessage);
     }
 
-    _onStart = function () {
+    _onStart() {
         this._loadBotUser();
         this._welcomeMessage();
     };
 
-    _loadBotUser = function () {
+    _loadBotUser() {
         let self = this;
         this.user = this.users.filter(function (user) {
             return user.name === self.name;
         })[0];
     };
 
-    _welcomeMessage = function () {
+    _welcomeMessage() {
         let params = {
             icon_emoji: ':rocket:',
             as_user: true
@@ -35,7 +35,7 @@ class CamJamBot extends Bot {
         this.postMessageToChannel('general', 'Hello there !', params);
     };
 
-    _onMessage = function (message) {
+    _onMessage(message) {
         if (this._isChatMessage(message) &&
             this._isChannelConversation(message) &&
             !this._isFromMe(message) &&
@@ -45,20 +45,20 @@ class CamJamBot extends Bot {
         }
     };
 
-    _isChatMessage = function (message) {
+    _isChatMessage(message) {
         return message.type === 'message' && Boolean(message.text);
     };
 
-    _isChannelConversation = function (message) {
+    _isChannelConversation(message) {
         return typeof message.channel === 'string' &&
             message.channel[0] === 'C';
     };
 
-    _isFromMe = function (message) {
+    _isFromMe(message) {
         return message.user === this.user.id;
     };
 
-    _isMentioningMe = function (message) {
+    _isMentioningMe(message) {
         return message.text.toLowerCase().indexOf('camjam') > -1 ||
             message.text.toLowerCase().indexOf(this.name) > -1;
     };
