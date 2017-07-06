@@ -47,9 +47,9 @@ StaticHandle.prototype.run = function (camJamPi) {
         camJamPi.right(camJamPi.thenStop);
         res.end("going straight forward !");
     });
-
+var port = this.settings.port;
     server.listen(this.settings.port, function () {
-        console.log('Server listenning on port : ' + this.settings.port);
+        console.log('Server listenning on port : ' + port);
     });
 
 };
