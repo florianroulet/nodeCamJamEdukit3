@@ -38,6 +38,13 @@ class CamJamBot extends Bot {
 
     _onMessage(message) {
         console.log('message : ', message);
+        if (message.type === 'message' && message.content &&
+
+            typeof message.channel === 'string' && message.channel[0] === 'C') {
+            console.log('new message : ', message);
+        }
+
+
         if (CamJamBot.isMessage(message)
             && CamJamBot.isMessageToChannel(message)
             && !CamJamBot.isFromUser(message, this.botId)
