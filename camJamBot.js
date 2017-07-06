@@ -47,7 +47,7 @@ class CamJamBot extends Bot {
     };
 
     _isChatMessage(message) {
-        return message.type === 'message' && Boolean(message.text);
+        return message.type === 'message' && Boolean(message.content);
     };
 
     _isChannelConversation(message) {
