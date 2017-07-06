@@ -11,7 +11,8 @@
     "rpi-gpio": "0.7.x",
     "slackbots": "^1.0.2",
     "socket.io": "1.4.x",
-    "socket.io-client": "^1.4.5"
+    "socket.io-client": "^1.4.5",
+    "util": "^0.10.3"
   },
   "devDependencies": {},
   "repository": {
