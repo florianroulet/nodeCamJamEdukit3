@@ -45,6 +45,11 @@ StaticHandle.prototype.run = function () {
         right(thenStop);
         res.end("going straight forward !");
     });
+
+    server.listen(8080, function () {
+        console.log('Server listenning on port 8080');
+    });
+
 };
 
 module.exports = StaticHandle

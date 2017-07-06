@@ -59,10 +59,6 @@ var async = require('async');
 
 initGPIO();
 
-server.listen(8080, function () {
-    console.log('Server listenning on port 8080');
-});
-
 ON_DEATH(function () {
     gpio.destroy(function () {
         console.log('Closed pins, now exit');
