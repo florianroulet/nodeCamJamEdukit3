@@ -28,9 +28,8 @@ class CamJamBot extends Bot {
     };
 
     _welcomeMessage() {
-        let params = {
-            icon_emoji: ':rocket:',
-            as_user: true
+        const params = {
+            icon_emoji: ':rocket:'
         };
         this.postMessageToChannel('general', 'Hello there !', params);
     };
