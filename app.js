@@ -8,7 +8,7 @@ var spawn = require("child_process").spawn;
 var pythonProcess = spawn('python', ['wii_remote_CamJam.py']);
 /***************************************** GESTION wiimote ***********************************************************/
 
-/***************************************** GESTION slackbot **********************************************************
+/***************************************** GESTION slackbot **********************************************************/
 var CamJamBot = require('./camJamBot');
 
 // create a bot
