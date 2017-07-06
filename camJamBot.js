@@ -49,7 +49,7 @@ class CamJamBot extends Bot {
             && CamJamBot.isMentioningMe(message, this.settings.name, this.user.name, this.user.id)
         ) {
             console.log('new message : ', message);
-            if (message.text ==='f') {
+            if (message.text.indexOf('f') > -1) {
                 this.camJamPi.forward(this.camJamPi.thenStop);
             }
         }
