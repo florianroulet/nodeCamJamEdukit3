@@ -36,6 +36,7 @@ class CamJamBot extends Bot {
     };
 
     _onMessage(message) {
+        console.log('message : ', message);
         if (this._isChatMessage(message) &&
             this._isChannelConversation(message) &&
             !this._isFromMe(message) &&
