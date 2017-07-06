@@ -1,16 +1,19 @@
 "use strict";
 
-var http = require('http');
 var fs = require('fs');
-var gpio = require('rpi-gpio');
-var async = require('async');
 var ON_DEATH = require('death');
-var app = require('express')();
-var spawn = require("child_process").spawn;
-var socket = require('socket.io-client')('http://roulet.freeboxos.fr/raspi');
 
+/***************************************** GESTION wiimote ***********************************************************/
 // starting wiimote process
+var spawn = require("child_process").spawn;
 var pythonProcess = spawn('python', ['wii_remote_CamJam.py']);
+/***************************************** GESTION wiimote ***********************************************************/
+
+
+
+/***************************************** GESTION page web **********************************************************/
+var app = require('express')();
+var http = require('http');
 
 // Chargement du fichier index.html affiché au client
 var server = http.Server(app);
@@ -49,12 +52,10 @@ app.get("/right", function (req, res) {
 	right(thenStop);
     res.end("going straight forward !");
 });
+/***************************************** GESTION page web **********************************************************/
 
-// Quand un client se connecte, on le note dans la console
-//io.sockets.on('connection', function (socket) {
-//    console.log('Un client est connecté !');
-//    socket.emit('connection', 'Vous êtes bien connecté !')
-
+/***************************************** GESTION socket ************************************************************/
+var socket = require('socket.io-client')('http://roulet.freeboxos.fr/raspi');
 socket.on('connect', function(){
     console.log('connected to host');
 });
@@ -76,7 +77,11 @@ socket.on('movement', function (message) {
             break;
         }
 });
-//});
+/***************************************** GESTION socket ************************************************************/
+
+/***************************************** GESTION gpio **************************************************************/
+var gpio = require('rpi-gpio');
+var async = require('async');
 
 initGPIO();
 
@@ -113,12 +118,7 @@ function initGPIO() {
 }
 
 function stop() {
-    command({
-        "19": {"value": false},
-        "21": {"value": false},
-        "24": {"value": false},
-        "26": {"value": false},
-    }, function(err, results) {
+    command(outputsOff, function(err, results) {
         console.log('All pins shutdown');
     });
 }
@@ -132,64 +132,65 @@ function thenStop() {
 
 function backward(callBack) {
     command({
-        "19": {"value": false},
-        "21": {"value": true},
-        "24": {"value": false},
-        "26": {"value": true},
+        "19": false,
+        "21": true,
+        "24": false,
+        "26": true
     }, callBack);
 }
 
 function forward(callBack) {
     command({
-        "19": {"value": true},
-        "21": {"value": false},
-        "24": {"value": true},
-        "26": {"value": false},
+        "19": true,
+        "21": false,
+        "24": true,
+        "26": false
     }, callBack);
 }
 
 function right(callBack) {
     command({
-        "19": {"value": false},
-        "21": {"value": false},
-        "24": {"value": true},
-        "26": {"value": false},
+        "19": false,
+        "21": false,
+        "24": true,
+        "26": false
     }, callBack);
 }
 
 function left(callBack) {
     command({
-        "19": {"value": true},
-        "21": {"value": false},
-        "24": {"value": false},
-        "26": {"value": false},
+        "19": true,
+        "21": false,
+        "24": false,
+        "26": false
     }, callBack);
 }
 
 var outputsOff = {
-    "19": {"value": false},
-    "21": {"value": false},
-    "24": {"value": false},
-    "26": {"value": false},
+    "19": false,
+    "21": false,
+    "24": false,
+    "26": false
 };
 
 function command(outputs, callBack) {
     callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
     async.parallel([
         function(callback) {
-            gpio.write(19, outputs["19"].value, callback);
+            gpio.write(19, outputs["19"], callback);
         },
         function(callback) {
-            gpio.write(24, outputs["24"].value, callback);
+            gpio.write(24, outputs["24"], callback);
         },
         function(callback) {
-            gpio.write(26, outputs["26"].value, callback);
+            gpio.write(26, outputs["26"], callback);
         },
         function(callback) {
-            gpio.write(21, outputs["21"].value, callback);
+            gpio.write(21, outputs["21"], callback);
         }
     ], function(err, results) {
         callBack();
     });
 
 }
+/***************************************** GESTION gpio** ************************************************************/
