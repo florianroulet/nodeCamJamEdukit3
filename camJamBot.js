@@ -41,7 +41,7 @@ class CamJamBot extends Bot {
             !this._isFromMe(message) &&
             this._isMentioningMe(message)
         ) {
-            console.log(data);
+            console.log('new message : ', message);
         }
     };
 
