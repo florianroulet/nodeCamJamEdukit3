@@ -10,7 +10,7 @@ var pythonProcess = spawn('python', ['wii_remote_CamJam.py']);
 /***************************************** GESTION wiimote ***********************************************************/
 
 /***************************************** GESTION slackbot **********************************************************/
-var camJamBot = require('camJamBot');
+var camJamBot = require('./camJamBot');
 
 // create a bot
 var bot = new camJamBot({
