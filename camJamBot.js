@@ -6,7 +6,7 @@ var Bot = require('slackbots');
 class CamJamBot extends Bot {
 
     constructor(settings) {
-        super();
+        super(settings);
         this.settings = settings;
         this.settings.name = this.settings.name || 'camJamBot';
 
