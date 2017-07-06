@@ -8,7 +8,6 @@ var CamJamBot = function Constructor(settings) {
     this.settings.name = this.settings.name || 'camJamBot';
 
     this.user = null;
-    this.db = null;
 };
 
 // inherits methods and properties from the Bot constructor
