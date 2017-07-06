@@ -9,11 +9,11 @@ var spawn = require("child_process").spawn;
 var pythonProcess = spawn('python', ['wii_remote_CamJam.py']);
 /***************************************** GESTION wiimote ***********************************************************/
 
-/***************************************** GESTION slackbot **********************************************************/
-var camJamBot = require('./camJamBot');
+/***************************************** GESTION slackbot **********************************************************
+var CamJamBot = require('./camJamBot');
 
 // create a bot
-var bot = new camJamBot({
+var bot = new CamJamBot({
     token: process.env.BOT_API_KEY,
     name: 'camjamedukit3'
 });
@@ -21,49 +21,11 @@ var bot = new camJamBot({
 bot.run();
 
 /***************************************** GESTION slackbot **********************************************************/
-
+var StaticWebHandle = require('./staticWebHandle');
+(new StaticWebHandle).run();
 
 /***************************************** GESTION page web **********************************************************/
-var app = require('express')();
-var http = require('http');
 
-// Chargement du fichier index.html affiché au client
-var server = http.Server(app);
-//var io = require('socket.io').listen(server);
-
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
-});
-
-app.get("/forward", function (req, res) {
-    res.writeHead(200, {"Content-Type": "text/html"});
-	forward(thenStop);
-    res.end("going straight forward !");
-});
-
-app.get("/backward", function (req, res) {
-    res.writeHead(200, {"Content-Type": "text/html"});
-	backward(thenStop);
-    res.end("going straight forward !");
-});
-
-app.get("/stop", function (req, res) {
-    res.writeHead(200, {"Content-Type": "text/html"});
-	stop();
-    res.end("All engines stopped !");
-});
-
-app.get("/left", function (req, res) {
-    res.writeHead(200, {"Content-Type": "text/html"});
-	left(thenStop);
-    res.end("going straight forward !");
-});
-
-app.get("/right", function (req, res) {
-    res.writeHead(200, {"Content-Type": "text/html"});
-	right(thenStop);
-    res.end("going straight forward !");
-});
 /***************************************** GESTION page web **********************************************************/
 
 /***************************************** GESTION socket ************************************************************/
