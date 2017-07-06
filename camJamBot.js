@@ -38,7 +38,7 @@ class CamJamBot extends Bot {
 
     _onMessage(message) {
         console.log('message : ', message);
-        if (message.type === 'message' && message.content &&
+        if (message.type === 'message' && message.text &&
 
             typeof message.channel === 'string' && message.channel[0] === 'C') {
             console.log('new message : ', message);
@@ -55,7 +55,7 @@ class CamJamBot extends Bot {
     };
 
     static isMessage(message){
-        return Boolean(message.type === 'message' && message.content);
+        return Boolean(message.type === 'message' && message.text);
     }
 
     static isMessageToChannel(message) {
@@ -67,10 +67,10 @@ class CamJamBot extends Bot {
     }
 
     _isMentioningMe(message) {
-        let content = message.content || '';
-        return content.toLowerCase().indexOf(this.settings.name) > -1 ||
-            content.toLowerCase().indexOf(this.user.name) > -1 ||
-            content.indexOf(this.user.id) > -1;
+        let text = message.text || '';
+        return text.toLowerCase().indexOf(this.settings.name) > -1 ||
+            text.toLowerCase().indexOf(this.user.name) > -1 ||
+            text.indexOf(this.user.id) > -1;
     };
 }
 
