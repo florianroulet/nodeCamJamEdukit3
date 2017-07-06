@@ -10,17 +10,18 @@ var CamJamPi = function Constructor() {
     _initGPIO();
 };
 
+CamJamPi.prototype.thenStop = function() {
+    var self = this;
+    console.log('Writes complete, pause then stop pins');
+    setTimeout(function() {
+        self.stop();
+    }, 100);
+};
+
 CamJamPi.prototype.stop = function() {
     _command(outputsOff, function(err, results) {
         console.log('All pins shutdown');
     });
-};
-
-CamJamPi.prototype.thenStop = function() {
-    console.log('Writes complete, pause then stop pins');
-    setTimeout(function() {
-        this.stop();
-    }, 100);
 };
 
 CamJamPi.prototype.backward = function(callBack) {
