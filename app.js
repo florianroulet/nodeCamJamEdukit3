@@ -1,7 +1,9 @@
 "use strict";
 
 var fs = require('fs');
-var ON_DEATH = require('death');
+var CamJamPi = require('./camJamNodePi');
+
+const camJamPi = new CamJamPi();
 
 /***************************************** GESTION wiimote ***********************************************************/
 // starting wiimote process
@@ -22,11 +24,7 @@ bot.run();
 
 /***************************************** GESTION slackbot **********************************************************/
 var StaticWebHandle = require('./staticWebHandle');
-(new StaticWebHandle).run();
-
-/***************************************** GESTION page web **********************************************************/
-
-/***************************************** GESTION page web **********************************************************/
+(new StaticWebHandle).run(camJamPi);
 
 /***************************************** GESTION socket ************************************************************/
 var socket = require('socket.io-client')('http://roulet.freeboxos.fr/raspi');
@@ -53,114 +51,3 @@ socket.on('movement', function (message) {
 });
 /***************************************** GESTION socket ************************************************************/
 
-/***************************************** GESTION gpio **************************************************************/
-var gpio = require('rpi-gpio');
-var async = require('async');
-
-initGPIO();
-
-ON_DEATH(function () {
-    gpio.destroy(function () {
-        console.log('Closed pins, now exit');
-        //return;
-        process.exit(0);
-    });
-});
-
-function initGPIO() {
-    async.parallel([
-        function(callback) {
-            gpio.setup(19, gpio.DIR_OUT, callback)
-        },
-        function(callback) {
-            gpio.setup(24, gpio.DIR_OUT, callback)
-        },
-        function(callback) {
-            gpio.setup(26, gpio.DIR_OUT, callback)
-        },
-        function(callback) {
-            gpio.setup(21, gpio.DIR_OUT, callback)
-        }
-    ], function(err, results) {
-        console.log('Pins set up');
-        return;
-    });
-}
-
-function stop() {
-    command(outputsOff, function(err, results) {
-        console.log('All pins shutdown');
-    });
-}
-
-function thenStop() {
-    console.log('Writes complete, pause then stop pins');
-    setTimeout(function() {
-        stop();
-    }, 100);
-}
-
-function backward(callBack) {
-    command({
-        "19": false,
-        "21": true,
-        "24": false,
-        "26": true
-    }, callBack);
-}
-
-function forward(callBack) {
-    command({
-        "19": true,
-        "21": false,
-        "24": true,
-        "26": false
-    }, callBack);
-}
-
-function right(callBack) {
-    command({
-        "19": false,
-        "21": false,
-        "24": true,
-        "26": false
-    }, callBack);
-}
-
-function left(callBack) {
-    command({
-        "19": true,
-        "21": false,
-        "24": false,
-        "26": false
-    }, callBack);
-}
-
-var outputsOff = {
-    "19": false,
-    "21": false,
-    "24": false,
-    "26": false
-};
-
-function command(outputs, callBack) {
-    callBack = typeof callBack !== 'undefined' ? callBack : function() {return;}
-    async.parallel([
-        function(callback) {
-            gpio.write(19, outputs["19"], callback);
-        },
-        function(callback) {
-            gpio.write(24, outputs["24"], callback);
-        },
-        function(callback) {
-            gpio.write(26, outputs["26"], callback);
-        },
-        function(callback) {
-            gpio.write(21, outputs["21"], callback);
-        }
-    ], function(err, results) {
-        callBack();
-    });
-
-}
-/***************************************** GESTION gpio** ************************************************************/

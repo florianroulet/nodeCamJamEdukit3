@@ -52,10 +52,4 @@ StaticHandle.prototype.run = function () {
 
 };
 
-module.exports = StaticHandle
-
-/*
-
-
-
-*/
+module.exports = StaticHandle;
