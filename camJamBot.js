@@ -62,7 +62,8 @@ class CamJamBot extends Bot {
     _isMentioningMe(message) {
         let content = message.content || '';
         return content.toLowerCase().indexOf(this.settings.name) > -1 ||
-            content.toLowerCase().indexOf(this.user.name) > -1;
+            content.toLowerCase().indexOf(this.user.name) > -1 ||
+            content.toLowerCase().indexOf(this.user.id) > -1;
     };
 }
 
