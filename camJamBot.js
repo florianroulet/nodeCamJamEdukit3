@@ -8,7 +8,7 @@ class CamJamBot extends Bot {
     constructor(settings) {
         super(settings);
         this.settings = settings;
-        this.settings.name = this.settings.name || 'camJamBot';
+        this.settings.name = settings.name || 'camJamBot';
 
         this.user = null;
         this.on('start', this._onStart);
@@ -60,7 +60,7 @@ class CamJamBot extends Bot {
     };
 
     _isMentioningMe(message) {
-        return message.text.toLowerCase().indexOf('camjam') > -1 ||
+        return message.text.toLowerCase().indexOf(this.settings.name) > -1 ||
             message.text.toLowerCase().indexOf(this.name) > -1;
     };
 }
