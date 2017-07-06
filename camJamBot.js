@@ -1,7 +1,7 @@
 'use strict';
 
-var util = require('util');
-var Bot = require('slackbots');
+const util = require('util');
+const Bot = require('slackbots');
 
 class CamJamBot extends Bot {
 
@@ -37,7 +37,7 @@ class CamJamBot extends Bot {
 
     _onMessage(message) {
         console.log('message : ', message);
-        if ((this._isChatMessage(message) || this._isChannelConversation(message)) &&
+        if ((CamJamBot._isChatMessage(message) || CamJamBot._isChannelConversation(message)) &&
             !this._isFromMe(message) &&
             this._isMentioningMe(message)
         ) {
@@ -45,11 +45,11 @@ class CamJamBot extends Bot {
         }
     };
 
-    _isChatMessage(message) {
+    static _isChatMessage(message) {
         return message.type === 'message' && Boolean(message.content);
     };
 
-    _isChannelConversation(message) {
+    static _isChannelConversation(message) {
         return typeof message.channel === 'string' &&
             message.channel[0] === 'C';
     };
@@ -59,8 +59,9 @@ class CamJamBot extends Bot {
     };
 
     _isMentioningMe(message) {
-        return message.content.toLowerCase().indexOf(this.settings.name) > -1 ||
-            message.content.toLowerCase().indexOf(this.user.name) > -1;
+        let content = message.content || '';
+        return content.toLowerCase().indexOf(this.settings.name) > -1 ||
+            content.toLowerCase().indexOf(this.user.name) > -1;
     };
 }
 
