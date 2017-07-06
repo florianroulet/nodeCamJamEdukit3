@@ -23,9 +23,7 @@ bot.on('start', function() {
     var params = {
         icon_emoji: ':rocket:'
     };
-    bot.postMessageToChannel('some-channel-name', 'Hello channel!', params);
-    bot.postMessageToUser('some-username', 'hello bro!', params);
-    bot.postMessageToGroup('some-private-group', 'hello group chat!', params);
+    bot.postMessageToChannel('general', 'Hello channel!', params);
 });
 
 /**
