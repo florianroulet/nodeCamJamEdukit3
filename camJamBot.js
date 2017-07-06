@@ -70,13 +70,4 @@ CamJamBot.prototype._isMentioningMe = function (message) {
         message.text.toLowerCase().indexOf(this.name) > -1;
 };
 
-
-/**
- * @param {object} data
- */
-bot.on('message', function(data) {
-    // all ingoing events https://api.slack.com/rtm
-
-});
-
 module.exports = CamJamBot;
