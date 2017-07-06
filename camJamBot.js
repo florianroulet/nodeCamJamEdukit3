@@ -52,7 +52,7 @@ class CamJamBot extends Bot {
         if (CamJamBot.isMessage(message)
             && CamJamBot.isMessageToChannel(message)
             && !CamJamBot.isFromUser(message, this.user.id)
-            && this._isMentioningMe(message)
+            && CamJamBot._isMentioningMe(message, this.settings.name, this.user.name, this.user.id)
         ) {
             console.log('new message : ', message);
         }
@@ -70,11 +70,11 @@ class CamJamBot extends Bot {
         return event.user === userId;
     }
 
-    _isMentioningMe(message) {
+    static _isMentioningMe(message, settingName, userName, id) {
         let text = message.text || '';
-        return text.toLowerCase().indexOf(this.settings.name) > -1 ||
-            text.toLowerCase().indexOf(this.user.name) > -1 ||
-            text.indexOf(this.user.id) > -1;
+        return text.toLowerCase().indexOf(settingName) > -1 ||
+            text.toLowerCase().indexOf(userName) > -1 ||
+            text.indexOf(id) > -1;
     };
 }
 
