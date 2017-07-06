@@ -7,7 +7,7 @@ var http = require('http');
 var StaticHandle = function Constructor(settings) {
     this.settings = settings;
     this.settings.port = settings.port || 8080;
-
+    console.log('init static handle', settings);
 };
 
 StaticHandle.prototype.run = function (camJamPi) {
