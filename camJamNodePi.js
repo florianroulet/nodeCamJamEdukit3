@@ -19,7 +19,7 @@ CamJamPi.prototype.stop = function() {
 CamJamPi.prototype.thenStop = function() {
     console.log('Writes complete, pause then stop pins');
     setTimeout(function() {
-        stop();
+        this.stop();
     }, 100);
 };
 
