@@ -20,9 +20,12 @@ var settings = {
 var bot = new Bot(settings);
 
 bot.on('start', function() {
-    bot.postMessageToChannel('some-channel-name', 'Hello channel!');
-    bot.postMessageToUser('some-username', 'hello bro!');
-    bot.postMessageToGroup('some-private-group', 'hello group chat!');
+    var params = {
+        icon_emoji: ':rocket:'
+    };
+    bot.postMessageToChannel('some-channel-name', 'Hello channel!', params);
+    bot.postMessageToUser('some-username', 'hello bro!', params);
+    bot.postMessageToGroup('some-private-group', 'hello group chat!', params);
 });
 
 /**
