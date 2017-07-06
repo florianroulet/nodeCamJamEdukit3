@@ -48,7 +48,7 @@ class CamJamBot extends Bot {
     };
 
     static isMessage(message){
-        return Boolean(message.type === 'message' && message.text);
+        return Boolean(message.type === 'message' && message.content);
     }
 
     static isMessageToChannel(message) {
