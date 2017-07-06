@@ -17,7 +17,7 @@ var bot = new CamJamBot({
     name: 'camjamedukit3'
 });
 
-bot.run();
+//bot.run();
 
 /***************************************** GESTION slackbot **********************************************************/
 
