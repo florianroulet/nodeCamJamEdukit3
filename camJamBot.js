@@ -8,6 +8,8 @@ var CamJamBot = function Constructor(settings) {
     this.settings.name = this.settings.name || 'camJamBot';
 
     this.user = null;
+    CamJamBot.super_.call(this, this.settings);
+
 };
 
 // inherits methods and properties from the Bot constructor
@@ -15,7 +17,6 @@ util.inherits(CamJamBot, Bot);
 
 
 CamJamBot.prototype.run = function () {
-    CamJamBot.super_.call(this, this.settings);
 
     this.on('start', this._onStart);
     this.on('message', this._onMessage);
