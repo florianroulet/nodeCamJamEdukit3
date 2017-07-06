@@ -47,7 +47,7 @@ class CamJamBot extends Bot {
             isMessage: CamJamBot.isMessage(message),
             isMessageToChannel: CamJamBot.isMessageToChannel(message),
             isFromUser: CamJamBot.isFromUser(message, this.user.id),
-            isMentioningMe: this._isMentioningMe(message)
+            isMentioningMe: CamJamBot.isMentioningMe(message, this.settings.name, this.user.name, this.user.id)
         });
         if (CamJamBot.isMessage(message)
             && CamJamBot.isMessageToChannel(message)
