@@ -50,7 +50,10 @@ class CamJamBot extends Bot {
         ) {
             console.log('new message : ', message);
 
-            switch(message.text) {
+            let text = message.text;
+            let user = '<@' + this.user.id + '>';
+            let char = text.substring(user.length + 1);
+            switch(char) {
                 case 'forward':
                 case 'f' :
                     this.camJamPi.forward(this.camJamPi.thenStop);
