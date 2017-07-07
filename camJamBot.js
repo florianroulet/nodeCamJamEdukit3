@@ -83,8 +83,7 @@ class CamJamBot extends Bot {
         return typeof message.channel === 'string' && message.channel[0] === 'C';
     }
 
-    static isFromUser(event, userId) {halt
-
+    static isFromUser(event, userId) {
         return event.user === userId;
     }
 
