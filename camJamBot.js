@@ -49,8 +49,28 @@ class CamJamBot extends Bot {
             && CamJamBot.isMentioningMe(message, this.settings.name, this.user.name, this.user.id)
         ) {
             console.log('new message : ', message);
-            if (message.text.indexOf('f') > -1) {
-                this.camJamPi.forward(this.camJamPi.thenStop);
+
+            switch(message.text) {
+                case 'forward':
+                case 'f' :
+                    this.camJamPi.forward(this.camJamPi.thenStop);
+                    break;
+                case 'backward':
+                case 'b' :
+                    this.camJamPi.backward(this.camJamPi.thenStop);
+                    break;
+                case 'right':
+                case 'r' :
+                    this.camJamPi.right(this.camJamPi.thenStop);
+                    break;
+                case 'left':
+                case 'l' :
+                    this.camJamPi.left(this.camJamPi.thenStop);
+                    break;
+                case 'stop' :
+                case 's' :
+                    this.camJamPi.stop(this.camJamPi.thenStop);
+                    break;
             }
         }
     };
@@ -63,7 +83,8 @@ class CamJamBot extends Bot {
         return typeof message.channel === 'string' && message.channel[0] === 'C';
     }
 
-    static isFromUser(event, userId) {
+    static isFromUser(event, userId) {halt
+
         return event.user === userId;
     }
 
