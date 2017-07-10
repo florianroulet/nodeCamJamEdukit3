@@ -45,7 +45,7 @@ class CamJamBot extends Bot {
             && CamJamBot.isMentioningMe(message, this.settings.name, this.user.name, this.user.id);
     }
 
-    _isNotificationInDirectMessage(){
+    _isNotificationInDirectMessage(message){
         return CamJamBot.isMessage(message)
             && CamJamBot.isDirectMessage(message)
             && !CamJamBot.isFromUser(message, this.user.id)
