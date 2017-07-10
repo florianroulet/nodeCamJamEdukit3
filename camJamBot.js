@@ -2,6 +2,10 @@
 
 const util = require('util');
 const Bot = require('slackbots');
+const quotes = require('random-movie-quotes');
+const params = {
+    icon_emoji: ':rocket:'
+};
 
 class CamJamBot extends Bot {
 
@@ -30,9 +34,7 @@ class CamJamBot extends Bot {
     };
 
     _welcomeMessage() {
-        const params = {
-            icon_emoji: ':rocket:'
-        };
+
         this.postMessageToChannel('general', 'Hello there !', params);
     };
 
@@ -48,6 +50,10 @@ class CamJamBot extends Bot {
             && CamJamBot.isDirectMessage(message)
             && !CamJamBot.isFromUser(message, this.user.id)
     }
+    _quotesMessage() {
+
+        this.postMessageToChannel('general', quotes.getQuote() , params);
+    };
 
     _onMessage(message) {
         console.log({
@@ -84,6 +90,7 @@ class CamJamBot extends Bot {
                     this.camJamPi.stop(this.camJamPi.thenStop);
                     break;
             }
+            this._quotesMessage();
         }
     };
 
