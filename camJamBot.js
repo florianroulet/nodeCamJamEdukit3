@@ -38,7 +38,7 @@ class CamJamBot extends Bot {
         this.postMessageToChannel('general', 'Hello there !', params);
     };
 
-    _quotesMessage() {
+    this._quotesMessage() {
 
         this.postMessageToChannel('general', quotes.getQuote() , params);
     };
