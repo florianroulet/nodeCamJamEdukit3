@@ -36,6 +36,19 @@ class CamJamBot extends Bot {
         this.postMessageToChannel('general', 'Hello there !', params);
     };
 
+    _isNotificationInGeneralChannel(message) {
+        return CamJamBot.isMessage(message)
+            && CamJamBot.isMessageToChannel(message)
+            && !CamJamBot.isFromUser(message, this.user.id)
+            && CamJamBot.isMentioningMe(message, this.settings.name, this.user.name, this.user.id);
+    }
+
+    _isNotificationInDirectMessage(){
+        return CamJamBot.isMessage(message)
+            && CamJamBot.isDirectMessage(message)
+            && !CamJamBot.isFromUser(message, this.user.id)
+    }
+
     _onMessage(message) {
         console.log({
             isMessage: CamJamBot.isMessage(message),
@@ -43,11 +56,7 @@ class CamJamBot extends Bot {
             isFromUser: CamJamBot.isFromUser(message, this.user.id),
             isMentioningMe: CamJamBot.isMentioningMe(message, this.settings.name, this.user.name, this.user.id)
         });
-        if (CamJamBot.isMessage(message)
-            && CamJamBot.isMessageToChannel(message)
-            && !CamJamBot.isFromUser(message, this.user.id)
-            && CamJamBot.isMentioningMe(message, this.settings.name, this.user.name, this.user.id)
-        ) {
+        if (_isNotificationInGeneralChannel(message) || _isNotificationInDirectMessage(message)) {
             console.log('new message : ', message);
 
             let text = message.text;
@@ -84,6 +93,10 @@ class CamJamBot extends Bot {
 
     static isMessageToChannel(message) {
         return typeof message.channel === 'string' && message.channel[0] === 'C';
+    }
+
+    static isDirectMessage(message) {
+        return typeof message.channel === 'string' && message.channel[0] === 'D';
     }
 
     static isFromUser(event, userId) {
