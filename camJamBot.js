@@ -84,7 +84,7 @@ class CamJamBot extends Bot {
                     this.camJamPi.stop(this.camJamPi.thenStop);
                     break;
             }
-            _quotesMessage();
+            this._quotesMessage();
         }
     };
 
