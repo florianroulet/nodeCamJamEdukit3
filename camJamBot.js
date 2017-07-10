@@ -67,7 +67,11 @@ class CamJamBot extends Bot {
 
             let text = message.text;
             let user = '<@' + this.user.id + '>';
-            let char = text.substring(user.length + 1);
+            var char;
+            if (!this._isNotificationInDirectMessage(message))
+                char = text.substring(user.length + 1);
+            else
+                char = text;
             switch(char) {
                 case 'forward':
                 case 'f' :
