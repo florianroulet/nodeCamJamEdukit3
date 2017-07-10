@@ -62,7 +62,7 @@ class CamJamBot extends Bot {
             isFromUser: CamJamBot.isFromUser(message, this.user.id),
             isMentioningMe: CamJamBot.isMentioningMe(message, this.settings.name, this.user.name, this.user.id)
         });
-        if (_isNotificationInGeneralChannel(message) || _isNotificationInDirectMessage(message)) {
+        if (this._isNotificationInGeneralChannel(message) || this._isNotificationInDirectMessage(message)) {
             console.log('new message : ', message);
 
             let text = message.text;
