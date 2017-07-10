@@ -38,7 +38,7 @@ class CamJamBot extends Bot {
         this.postMessageToChannel('general', 'Hello there !', params);
     };
 
-    this._quotesMessage() {
+    _quotesMessage() {
 
         this.postMessageToChannel('general', quotes.getQuote() , params);
     };
@@ -84,7 +84,7 @@ class CamJamBot extends Bot {
                     this.camJamPi.stop(this.camJamPi.thenStop);
                     break;
             }
-            _quotesMessage();
+            this._quotesMessage();
         }
     };
 
