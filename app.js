@@ -40,7 +40,7 @@ var RaspiCam = require("raspicam");
 
 var camera = new RaspiCam({
     mode: "photo",
-    output: "~/cje3/last.jpg"
+    output: "/home/pi/cje3/last.jpg"
 });
 
 camera.start( );
