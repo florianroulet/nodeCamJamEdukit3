@@ -32,3 +32,15 @@ var SocketHandle = require('./socketHandle');
 var socketHandle = new SocketHandle({host: process.env.SOCKET_HOST});
 socketHandle.run(camJamPi);
 
+
+
+
+
+var RaspiCam = require("raspicam");
+
+var camera = new RaspiCam({
+    mode: "photo",
+    output: "~/cje3/last.jpg"
+});
+
+camera.start( );
