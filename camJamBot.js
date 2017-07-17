@@ -3,6 +3,8 @@
 const util = require('util');
 const Bot = require('slackbots');
 const quotes = require('random-movie-quotes');
+var RaspiCam = require("raspicam");
+
 const params = {
     icon_emoji: ':rocket:'
 };
@@ -18,6 +20,13 @@ class CamJamBot extends Bot {
         this.on('start', this._onStart);
         this.on('message', this._onMessage);
         this.camJamPi = camJamPi;
+
+        this.camera = new RaspiCam({
+            mode: "photo",
+            output: "/home/pi/cje3/last.jpg"
+        });
+
+
     }
 
     _onStart() {
@@ -92,6 +101,11 @@ class CamJamBot extends Bot {
                 case 'stop' :
                 case 's' :
                     this.camJamPi.stop(this.camJamPi.thenStop);
+                    break;
+                case 'pic' :
+                case 'p' :
+                    this.camera.stop();
+                    this.camera.start();
                     break;
             }
             this._quotesMessage();
